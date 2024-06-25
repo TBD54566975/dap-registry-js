@@ -1,0 +1,20 @@
+name: dap-registry
+
+services:
+  db:
+    container_name: registry-db
+    image: postgres:15
+    environment:
+      POSTGRES_USER: dap
+      POSTGRES_PASSWORD: dap
+      POSTGRES_DB: dap_registry
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+    volumes:
+      - /var/lib/postgresql/data
+
+networks:
+  backend:
+    driver: bridge
