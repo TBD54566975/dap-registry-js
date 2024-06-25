@@ -31,7 +31,7 @@ export default defineEventHandler(async event => {
   }
 
   // Attempt to insert the DAP registration into the database.
-  const db = useDatabase('dap_registry');
+  const db = useDatabase();
   try {
     await db.insert(daps).values({
       id: registration.id.toString(),
