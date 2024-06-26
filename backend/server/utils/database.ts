@@ -18,6 +18,7 @@ class DbConnect {
 
   private constructor(config: Partial<DbConfig> = {}) {
     this.#config = this.#buildConfig(config);
+    console.log('Database config:', this.#config);
     this.#pool = new Pool(this.#config);
     this.#database = drizzle(this.#pool, { schema });
   }
@@ -66,6 +67,7 @@ class DbConnect {
 
 export const drainDbPool = DbConnect.drainPool;
 export const runDbMigrations = async () => {
-  await DbConnect.getInstance().runMigrations();
+  console.log('skipping migrations');
+  // await DbConnect.getInstance().runMigrations();
 };
 export const useDatabase = () => DbConnect.database;
