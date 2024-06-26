@@ -1,7 +1,7 @@
 dns: dap-registry.tbddev.org
 
 secrets:
-  REGISTRY_PORTABLE_DID: <path:tbd/dapreg#DID>
+  REGISTRY_PORTABLE_DID: <path:tbd/dap-registry#DID>
 
 image:
   repository: ghcr.io/tbd54566975/dap-registry-js
