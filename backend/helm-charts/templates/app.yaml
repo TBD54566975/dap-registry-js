@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dapreg-backend
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: dapreg-backend
+  template:
+    metadata:
+      labels:
+        app: dapreg-backend
+    spec:
+      containers:
+        - name: dapreg-backend
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          envFrom:
+            - secretRef:
+                name: dapreg-secrets
+          env:
+            - name: DB_SSL
+              value: false
+            - name: LOG_LEVEL
+              value: "info"
+            - name: REGISTRY_PORTABLE_DID
+              valueFrom:
+                secretKeyRef:
+                  name: dapreg-backend-did-secret
+                  key: registry_portable_did
+            # crossplane db secrets
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: dapreg-backend-psql-secret
+                  key: endpoint
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: dapreg-backend-psql-secret
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dapreg-backend-psql-secret
+                  key: password
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: dapreg-backend-psql-secret
+                  key: port
+            - name: DB_NAME
+              # TODO using default db name, per the template that the claims in apps like yours use https://github.com/tbdeng/tbd-crossplane/blob/main/templates/serverless_psql.yaml#L78
+              # TODO: consider changing the value so we have our own db schema
+              value: "tbd"

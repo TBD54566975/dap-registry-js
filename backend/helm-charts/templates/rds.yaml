@@ -1,0 +1,13 @@
+apiVersion: database.tbddev.org/v1alpha1
+kind: ServerlessPSQL
+metadata:
+  name: dapreg-backend-psql-cluster
+spec:
+  parameters:
+    masterUserPasswordSecretRef:
+      key: password
+      name: dapreg-backend-psql-master-secret
+      namespace: {{ .Release.Namespace }}
+    writeConnectionSecretToRef:
+      name: dapreg-backend-psql-secret
+      namespace: {{ .Release.Namespace }}
