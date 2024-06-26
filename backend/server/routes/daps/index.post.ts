@@ -9,7 +9,7 @@ export default defineEventHandler(async event => {
     const body = await readBody(event, { strict: true });
     registration = await DapRegistration.parse(body);
   } catch (error: any) {
-    const message = 'Failed to parse DAP registration request';
+    const message = error?.message ?? 'Failed to parse DAP registration request';
     return Response.json({ error: { message } }, { status: 400 });
   }
   
