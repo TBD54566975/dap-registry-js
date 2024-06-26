@@ -4,7 +4,7 @@ secrets:
   REGISTRY_PORTABLE_DID: <path:tbd/dapreg#DID>
 
 image:
-  repository: <some-container-registry>
+  repository: ghcr.io/tbd54566975/dap-registry-js
   tag: 0.0.1
   pullPolicy: Always
 
