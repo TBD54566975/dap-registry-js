@@ -16,11 +16,11 @@ spec:
         - destination:
             host: dapreg-frontend
             port:
-              number: {{ .Values.service.port }}
+              number: 8080
     # fallthrough to backend routes
     - name: dapreg-backend-route
       route:
         - destination:
             host: dapreg-backend
             port:
-              number: 8080
+              number: {{ .Values.service.port }}
