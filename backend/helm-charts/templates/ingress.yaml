@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: dapreg-backend-vservice
+spec:
+  hosts:
+    - "{{ .Values.dns }}"
+  gateways:
+    - istio-system/primary-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /admin
+      name: dapreg-frontend-route
+      route:
+        - destination:
+            host: dapreg-frontend
+            port:
+              number: {{ .Values.service.port }}
+    # fallthrough to backend routes
+    - name: dapreg-backend-route
+      route:
+        - destination:
+            host: dapreg-backend
+            port:
+              number: 8080

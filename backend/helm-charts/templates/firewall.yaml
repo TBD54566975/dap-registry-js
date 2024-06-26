@@ -1,0 +1,27 @@
+# this policy allow the apps only in the same namespace to talk to each other
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: dapreg-backend-ns
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: ["{{ .Release.Namespace }}"]
+---
+# this lets app receive traffic from common ingress gateway 
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: dapreg-backend-host
+spec:
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        hosts:
+        - "{{ .Values.dns }}"
+  - from:
+    - source:
+        namespaces: [istio-system"]

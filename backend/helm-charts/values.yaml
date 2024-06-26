@@ -1,0 +1,14 @@
+dns: dap-registry.tbddev.org
+
+secrets:
+  REGISTRY_PORTABLE_DID: <path:tbd/dapreg#DID>
+
+image:
+  repository: <some-container-registry>
+  tag: 0.0.1
+  pullPolicy: Always
+
+replicaCount: 1
+
+service:
+  port: 3000
