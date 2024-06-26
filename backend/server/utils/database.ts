@@ -52,15 +52,13 @@ class DbConnect {
   }
 
   public async runMigrations() {
-    const client = await this.#pool.connect();
     try {
-      const db = drizzle(client);
+      const db = DbConnect.getInstance().#database;
       await migrate(db, { migrationsFolder: this.#config.migrationFolder });
     } catch (error: any) {
       console.error('Database migration failed:', error?.message || 'Unknown error');
+      await drainDbPool();
       throw error;
-    } finally {
-      client.release();
     }
   }
 
