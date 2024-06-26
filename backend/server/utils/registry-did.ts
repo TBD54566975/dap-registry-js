@@ -13,7 +13,13 @@ export function isPortableDid(obj: unknown): obj is PortableDid {
 
 export async function useRegistryDid(event: H3Event<EventHandlerRequest>): Promise<BearerDid> {
   // Access the portable DID from the runtime configuration.
-  const { portableDid } = useRuntimeConfig(event);
+  let { portableDid } = useRuntimeConfig(event);
+
+  // Note: On some platforms, when reading the portable DID from runtime environment variables,
+  // it may be returned as a string or a string wrapped with extra single quotes.
+  portableDid = typeof portableDid === 'string'
+    ? JSON.parse(portableDid.replaceAll("'", ""))
+    : portableDid;
   
   if (!isPortableDid(portableDid)) {
     throw new Error('Failed to access portable DID from runtime configuration')
