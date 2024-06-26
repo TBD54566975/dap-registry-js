@@ -16,7 +16,7 @@ export interface RegistrationMetadata {
 }
 
 /**
- * Represents the full DAP registration object: metadata and signature.
+ * Represents the full DAP registration: metadata and signature.
  */
 export interface RegistrationModel {
   id: string;
@@ -24,6 +24,18 @@ export interface RegistrationModel {
   did: string;
   domain: string;
   signature: string;
+}
+
+export interface RegistrationRequest extends RegistrationModel {}
+
+export interface RegistrationResponse {
+  proof: RegistrationModel;
+}
+
+export interface ErrorResponse {
+  error: {
+    message: string;
+  };
 }
 
 /**
@@ -171,8 +183,8 @@ export class DapRegistration {
    * Parses a JSON message into a DAP registration.
    * @returns A promise that resolves to a {@link DapRegistration} instance.
    */
-  static async parse(rawRegistration: RegistrationModel | string): Promise<DapRegistration> {
-    const jsonRegistration = DapRegistration.#rawToRegistrationModel(rawRegistration);
+  static async parse(rawRequest: RegistrationRequest | string): Promise<DapRegistration> {
+    const jsonRegistration = DapRegistration.#rawToRegistrationRequest(rawRequest);
 
     const registration = new DapRegistration(
       RegistrationId.parse(jsonRegistration.id),
@@ -238,9 +250,9 @@ export class DapRegistration {
     };
   }
 
-  static #rawToRegistrationModel(rawRegistration: RegistrationModel | string): RegistrationModel {
+  static #rawToRegistrationRequest(rawRequest: RegistrationRequest | string): RegistrationRequest {
     try {
-      return typeof rawRegistration === 'string' ? JSON.parse(rawRegistration) : rawRegistration;
+      return typeof rawRequest === 'string' ? JSON.parse(rawRequest) : rawRequest;
     } catch (error: any) {
       const errorMessage = error?.message ?? 'Unknown error';
       throw new InvalidDapRegistration(`Failed to parse DAP registration: ${errorMessage}`);
