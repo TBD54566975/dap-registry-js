@@ -5,7 +5,7 @@ secrets:
 
 image:
   repository: ghcr.io/tbd54566975/dap-registry-js
-  tag: 0.0.1
+  tag: tshoot
   pullPolicy: Always
 
 replicaCount: 1
