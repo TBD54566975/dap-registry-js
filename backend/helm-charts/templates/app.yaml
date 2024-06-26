@@ -29,8 +29,8 @@ spec:
             - name: REGISTRY_PORTABLE_DID
               valueFrom:
                 secretKeyRef:
-                  name: dapreg-backend-did-secret
-                  key: registry_portable_did
+                  name: dapreg-secrets
+                  key: REGISTRY_PORTABLE_DID
             # crossplane db secrets
             - name: DB_HOST
               valueFrom:
