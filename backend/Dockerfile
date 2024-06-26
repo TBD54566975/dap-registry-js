@@ -17,7 +17,10 @@ FROM base AS release
 COPY --from=build /usr/src/app/.output .
 COPY --from=build /usr/src/app/db ./db
 
+# Install postgresql-client
+RUN apk add --no-cache postgresql-client
+
 # run the app
-USER node
+# USER node
 EXPOSE 3000/tcp
 ENTRYPOINT [ "node", "server/index.mjs" ]
