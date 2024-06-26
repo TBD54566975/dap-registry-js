@@ -22,10 +22,10 @@ spec:
             - secretRef:
                 name: dapreg-secrets
           env:
-            - name: DB_SSL
-              value: "true"
             - name: LOG_LEVEL
               value: "info"
+            - name: NITRO_HOST
+              value: "0.0.0.0"
             - name: REGISTRY_PORTABLE_DID
               valueFrom:
                 secretKeyRef:
@@ -56,3 +56,5 @@ spec:
               # TODO using default db name, per the template that the claims in apps like yours use https://github.com/tbdeng/tbd-crossplane/blob/main/templates/serverless_psql.yaml#L78
               # TODO: consider changing the value so we have our own db schema
               value: "tbd"
+            - name: DB_SSL
+              value: "true"
