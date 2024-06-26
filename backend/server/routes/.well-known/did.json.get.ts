@@ -1,4 +1,4 @@
-import type { BearerDid } from "@web5/dids";
+import type { BearerDid } from '@web5/dids';
 
 export default defineEventHandler(async event => {
   let registryDid: BearerDid;

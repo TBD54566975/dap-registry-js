@@ -1,6 +1,6 @@
 export default defineNitroPlugin((nitroApp) => {
   nitroApp.hooks.hookOnce("close", async () => {
-    console.log("🔌 Disconnecting database...");
+    console.log("\n🔌 Disconnecting database...");
 
     // Drain the pool of all active clients, disconnect them, and shut down any internal timers in the pool.
     await drainDbPool();

@@ -8,7 +8,7 @@
     "prepare": "nitro prepare",
     "preview": "node .output/server/index.mjs",
     "test": "vitest",
-    "migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@web5/common": "1.0.1",
