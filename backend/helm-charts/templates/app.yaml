@@ -58,3 +58,24 @@ spec:
               value: "tbd"
             - name: DB_SSL
               value: "true"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dapreg-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dapreg-frontend
+  template:
+    metadata:
+      labels:
+        app: dapreg-frontend
+    spec:
+      containers:
+        - name: dapreg-backend
+          image: "placeholderimage"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 3000
