@@ -8,6 +8,15 @@ spec:
   gateways:
     - istio-system/primary-gateway
   http:
+    - name: dapreg-frontend-route
+      match:
+      - uri:
+          prefix: "/admin"
+      route:
+      - destination:
+          host: dapreg-frontend-service
+          port:
+            number: {{ .Values.service.port }}
     - name: dapreg-backend-route
       route:
         - destination:
