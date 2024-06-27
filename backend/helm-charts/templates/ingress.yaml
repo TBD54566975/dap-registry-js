@@ -11,6 +11,6 @@ spec:
     - name: dapreg-backend-route
       route:
         - destination:
-            host: dapreg-backend
+            host: dapreg-backend-service
             port:
               number: {{ .Values.service.port }}
