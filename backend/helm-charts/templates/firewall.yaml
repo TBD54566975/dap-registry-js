@@ -10,6 +10,21 @@ spec:
     - source:
         namespaces: ["{{ .Release.Namespace }}"]
 ---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: dapreg-oauth
+spec:
+  action: CUSTOM
+  provider:
+    name: "oauth2-proxy"
+  rules:
+  - to:
+    - operation:
+        paths: ["/admin*"]
+        hosts:
+        - "{{ .Values.dns }}"
+---
 # this lets app receive traffic from common ingress gateway 
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
